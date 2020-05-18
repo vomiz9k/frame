@@ -145,6 +145,7 @@ put_text_into_center:
 ;Destroyed: no
 ;------------------------------------------	
 put_frame:
+		cld
 		push ax
 		push bx
 		push cx
@@ -267,10 +268,12 @@ print_word:
 		
 		call strlen
 		mov ah, 1fh
-kek:	mov al, [bx]
+		cld
+		
+print_loop:	mov al, [bx]
 		stosw
 		inc bx
-		loop kek
+		loop print_loop
 		
 		pop cx
 		pop bx
@@ -329,6 +332,7 @@ put_rectangle:
 ;------------------------------------------
 put_horizontal_line:
 		push cx
+		cld
 		rep stosw
 		pop cx
 		ret
@@ -345,8 +349,8 @@ put_horizontal_line:
 ;------------------------------------------
 put_vertical_line:
 		push cx
-
-vert:	stosw
+		cld
+vert:		stosw
 		add di, 158
 		dec cx
 		cmp cx, 0
